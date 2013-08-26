@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Creative Coding with HTML5 Canvas</title>
+  <link rel="stylesheet" type="text/css" href="presentation.css">
+</head>
+<body>
+  <div class="slide">
+    <div class="title-screen">
+      <h1>Creative Coding with HTML5 Canvas</h1>
+      <h2 class="by_line">Alex Cruikshank</h2>
+      <h2 class="by_line">acruikshank@github</h2>
+      <h2 class="by_line">@sivoh</h2>
+      <h2 class="logo"><img src="c5_logo.png"/></h2>      
+    </div>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">What is HTML5 Canvas?</h2>
+  </div>
+
+  <div class="slide bulleted">
+    <h2 class="head">What is Canvas?</h2>
+    <ul class='hidden-points'>
+      <li>Added to WebKit in 2005</li>
+      <li>Adopted by Mozilla in 2006</li>
+      <li>VRML Hack in IE</li>
+    </ul>
+  </div>
+
+  <div class="slide img">
+    <img src="caniuse.png"/>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">&lt;canvas&gt; vs. SVG</h2>
+  </div>
+
+  <div class="slide drawing">
+    <canvas id="svg-vs-canvas"></canvas>
+  </div>
+
+  <div class="slide">
+    <h2 class="center quote">SVG is HTML for shapes.<br /><br /> &lt;canvas&gt; is an IMG tag with drawing functions.</h2>
+  </div>
+
+  <div class="slide img">
+    <img src="HTML5_Canvas_Cheat_Sheet.png"/>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">the 40 40 10 10 rectangle</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="the-40-40-10-10-rect"
+>var canvas = document.getElementById('c');
+var ctx = canvas.getContext('2d');
+ctx.fillStyle = '#fff';
+ctx.fillRect(40,40,10,10);
+</div>
+    </div>
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide bulleted">
+    <h2 class="head">Paths</h2>
+    <ul class='hidden-points'>
+      <li>beginPath</li>
+      <li>moveTo</li>
+      <li>lineTo</li>
+      <li>arc</li>
+      <li>quadraticCurveTo</li>
+      <li>bezierCurveTo</li>
+    </ul>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">paths</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="paths-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+var margin = cw * 0.1;
+ctx.beginPath();
+ctx.moveTo(margin,margin);
+ctx.lineTo(cw-margin,ch-margin);
+
+ctx.strokeStyle = '#fff';
+ctx.lineWidth = 1;
+ctx.stroke();
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">shapes</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="shape-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = '#ff6';
+ctx.strokeStyle = '#ff6';
+ctx.lineWidth = 2;
+
+ctx.fillRect(cw/4,ch/4,cw/2,ch/2);
+
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">A Little Math</h2>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">Min + x*(Max - Min)</h2>
+    <label class="sub-center">Linear Interpolation</label>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">(y - Min) / (Max - Min)</h2>
+    <label class="sub-center">Inverse Linear Interpolation</label>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">linear interpolation</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="interp-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+function interp( x, min, max ) {
+  return min + x * (max - min);
+}
+function deinterp( x, min, max ) {
+  return (x-min) / (max - min);
+}
+ctx.beginPath();
+ctx.moveTo(0,ch/2);
+var n = 1000;
+for (var i=0; i<=n; i++) {
+  var x = deinterp(i, 0, n);
+  var y = deinterp(Math.sin(i/20), -1, 1);
+  ctx.lineTo( 
+    interp( x, 0, cw ),
+    interp( y, 3*ch/4, ch/4 ) );
+}
+ctx.strokeStyle = '#f07';
+ctx.lineWidth = 4;
+ctx.stroke();
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">Math.cos(ϴ), Math.sin(ϴ)</h2>
+    <label class="sub-center">Trigonometry</label>
+  </div>
+
+  <div class="slide drawing">
+    <canvas id="trig-circles"></canvas>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">sin and cos</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="star-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+var RADIUS = Math.min( cw, ch ) * 0.4;
+var N = 5;
+ctx.beginPath();
+for (var i=0; i < N; i++) {
+  var theta = i * 2*Math.PI / N;
+  ctx.moveTo(
+    cw/2 + RADIUS*Math.sin(theta),
+    ch/2 - RADIUS*Math.cos(theta) );
+
+  theta += parseInt((N-1)/2)*2*Math.PI/N;
+  ctx.lineTo(
+    cw/2 + RADIUS*Math.sin(theta),
+    ch/2 - RADIUS*Math.cos(theta));
+}
+
+ctx.strokeStyle = '#ff6';
+ctx.lineWidth = 1;
+ctx.stroke();
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">images</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="draw-image-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+var img = new Image();
+img.src = 'c5_logo.png';
+img.onload = function() {
+  ctx.drawImage(img, 0, 0);
+}</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">Drawing text in canvas</h2>
+    <label class="sub-center">(don't do it)</label>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">text</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="text-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+ctx.font = '80px Futura,Helvetica,Arial';
+ctx.strokeStyle = ctx.fillStyle = '#f09';
+ctx.textAlign = 'center';
+ctx.fillText("Chattanooga", cw/2, ch/2);
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">transforms</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="transforms-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+draw();
+
+ctx.fillStyle = '#ff6';
+
+function draw() {
+  ctx.fillStyle = ctx.strokeStyle = '#6cf';
+  ctx.beginPath();
+  ctx.moveTo(100,0); ctx.lineTo(0,0);
+  ctx.lineTo(0,100); ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(100,2); ctx.lineTo(100,-2);
+  ctx.lineTo(108,0); ctx.lineTo(100,2);
+  ctx.moveTo(2,100); ctx.lineTo(-2,100);
+  ctx.lineTo(0,108); ctx.lineTo(2,100);
+  ctx.fill();
+
+  ctx.fillStyle = '#fff';
+  ctx.font = '16px Helvetica,Arial'
+  ctx.textAlign = 'center';
+  ctx.fillText('x', 114, 4);
+  ctx.fillText('y', 0, 120);
+  ctx.fillText('chattanooga',50,50)
+}
+
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">recursion</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="tree-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = ctx.strokeStyle = '#6cf';
+
+function render(txt) {
+  ctx.fillStyle = '#fff';
+  ctx.font = '30px Helvetica,Arial'
+  ctx.textAlign = 'left';
+  var width = ctx.measureText(txt).width;
+  ctx.fillText(txt,0,0)
+
+  ctx.save();
+    ctx.translate( 1.1 * width, 0 );
+    ctx.scale(.8,.8);
+    var angle = .15 * Math.PI;
+    ctx.rotate(angle);
+    ctx.fillText(txt,0,0);
+  ctx.restore();
+}
+
+ctx.translate(cw/2,ch);
+ctx.rotate(-Math.PI/2);
+render('Chattanooga');
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">more recursion</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="serpenski-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = ctx.strokeStyle = '#6cf';
+
+var RADIUS = 300;
+
+function render(it) {
+  if (it <= 1) {
+    ctx.beginPath();
+    ctx.moveTo(RADIUS,0);
+    ctx.rotate(2*Math.PI/3);
+    ctx.lineTo(RADIUS,0);
+    ctx.rotate(2*Math.PI/3);
+    ctx.lineTo(RADIUS,0);
+    ctx.fill();
+  } else {
+    ctx.save();
+      ctx.scale(.5,.5);
+      ctx.save()
+        ctx.translate(RADIUS,0);
+        render(it-1);
+      ctx.restore();
+      ctx.rotate(2*Math.PI/3);
+      ctx.save();
+        ctx.translate(RADIUS,0);
+        render(it-1);
+      ctx.restore();
+      ctx.rotate(2*Math.PI/3);
+      ctx.save();
+        ctx.translate(RADIUS,0);
+        render(it-1);
+      ctx.restore();
+    ctx.restore();
+  }
+}
+
+ctx.translate(cw/2,ch/2);
+ctx.rotate(-Math.PI/2);
+render(1);
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+</body>
+<foot>
+  <script src="vendor/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="cannedDrawings.js" type="text/javascript" charset="utf-8"></script>
+  <script src="canvasDemo.js" type="text/javascript" charset="utf-8"></script>
+  <script src="presentation.js" type="text/javascript" charset="utf-8"></script>
+</foot>
+</html>

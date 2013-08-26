@@ -1,0 +1,19 @@
+{
+  "name": "devlink-canvas",
+  "version": "1.0.0",
+  "author": "Alex Cruikshank",
+  "description": "Presentation on HTML5 Canvas",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "presentation"
+  ],
+  "dependencies" : {
+    "connect"  :  "2.8.5"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
