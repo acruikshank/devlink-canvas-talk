@@ -242,6 +242,25 @@ h2.center.quote {
   text-shadow: 1px 1px 1px #000;
 }
 
+.code-container {
+  -webkit-transition: opacity .2s linear;
+  position: absolute;
+  top: 20%;
+  right: 0;
+  height: 80%;
+  left: 0;
+  z-index: 1;
+}
+
+.code-container .code {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  left: 0;        
+  font-size: 20px;
+}
+
 .editor-container {
   -webkit-transition: opacity .2s linear;
   position: absolute;

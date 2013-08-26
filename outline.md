@@ -23,11 +23,10 @@ E. A Little Math
     Math.sin()
         Multiplying by radius gives us the Y axis
     Get used to working in radians.
-F. Stars
 G. Shapes
     rect()
-    arc()
     arc(cx, cy, r, 0, 2*Math.PI, true)
+F. Stars
 H. Images
     drawImage()
 I. Text

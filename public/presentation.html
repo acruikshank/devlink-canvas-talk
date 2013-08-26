@@ -44,6 +44,28 @@
     <h2 class="center quote">SVG is HTML for shapes.<br /><br /> &lt;canvas&gt; is an IMG tag with drawing functions.</h2>
   </div>
 
+  <div class="slide">
+    <h2 class="head">all it takes</h2>
+    <div class="code-container">
+      <div class="code" id="page_example"><script type="text/html"><!DOCTYPE html>
+<html><head>
+  <style>
+    html{height:100%;} 
+    body{margin:0;height:100%;}
+    canvas{width:100%;height:100%;}
+  </style>
+</head><body>
+  <canvas id="c"></canvas>
+  &lt;script>
+    var canvas = document.getElementById('c');
+    // ready to go now
+  &lt;/script>
+</body></html>
+</script>
+      </div>
+    </div>
+  </div>
+
   <div class="slide img">
     <img src="HTML5_Canvas_Cheat_Sheet.png"/>
   </div>
@@ -367,6 +389,90 @@ render(1);
 </div>
     </div>  
     <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide">
+    <h2 class="center">setInterval &amp; clearRect</h2>
+    <label class="sub-center">animation</label>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">animation</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="animation-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+
+
+var RADIUS = Math.min(cw,ch)/2.2;
+var FPS = 6;
+
+var theta = 0;
+
+function draw() {
+  ctx.clearRect( 0, 0, cw, ch)
+
+  ctx.fillStyle = '#ff6';
+  ctx.beginPath();
+  ctx.arc(
+    cw/2 + RADIUS * Math.cos(theta), 
+    ch/2 + RADIUS * Math.sin(theta), 
+    10, 0, 2*Math.PI, true );
+  ctx.fill();
+
+  theta -= Math.PI / 2 / FPS;
+}
+
+setInterval( draw, 1000 / FPS )
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide canvas-demo">
+    <h2 class="top">interaction</h2>
+    <div class="editor-container">
+      <div class="editor interactive" id="interaction-demo"
+>var canvas = document.getElementById('c');
+var cw=canvas.width=canvas.offsetWidth;
+var ch=canvas.height=canvas.offsetHeight;
+var ctx = canvas.getContext('2d');
+var points = [];
+
+
+function draw(x,y) {
+  ctx.clearRect( 0, 0, cw, ch);
+  ctx.strokeStyle = 'rgba(255,225,100,1)';
+
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  for (var i=1,p; p = points[i]; i++)
+    ctx.lineTo(p.x,p.y);
+  ctx.stroke();
+
+  points = [{x:x,y:y}].concat(points.slice(0,9));
+}
+
+canvas.onmousemove = function(e) {
+  e = e || window.event;
+  draw(e.clientX,e.clientY);
+}
+</div>
+    </div>  
+    <iframe class="results"></iframe>
+  </div>
+
+  <div class="slide">
+    <div class="title-screen">
+      <h2 class="center">Thank You!</h2>
+      <label class="url">http://github.com/acruikshank/devlink-canvas-talk</label>
+      <h2 class="by_line">Alex Cruikshank</h2>
+      <h2 class="by_line">acruikshank@github</h2>
+      <h2 class="by_line">@sivoh</h2>
+      <h2 class="logo"><img src="c5_logo.png"/></h2>      
+    </div>
   </div>
 
 </body>

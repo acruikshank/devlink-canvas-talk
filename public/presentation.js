@@ -45,12 +45,14 @@ if ( ! subslides.length ) {
 // CODE EXAMPLES
 var codeExamples = document.getElementsByClassName('code');
 for (var i=0,ex; ex = codeExamples[i]; i++) {
+  var code, data = ex.getElementsByTagName('script')[0];
+  if (data) data.innerHTML = data.innerHTML.replace(/&lt;/g,'<')
   var editor = ace.edit(ex);
   editor.setReadOnly(true);
   editor.setTheme("ace/theme/merbivore_soft");
-  editor.getSession().setMode("ace/mode/javascript");
+  editor.getSession().setMode("ace/mode/html");
   editor.getSession().setTabSize(2);
-  editor.setShowPrintMargin(false);  
+  editor.setShowPrintMargin(false);
 }
 
 
