@@ -1,7 +1,7 @@
 devlink-canvas-talk
 ===================
 
-This is the deck for a talk on creative coding in HTML5 Canvas. You can view the deck at http://acruikshank.github.io/devlink-canvas-talk.
+This is the deck for a talk on creative coding in HTML5 Canvas. You can view the deck at http://acruikshank.github.io/devlink-canvas-talk/presentation.html.
 
 The presentation is entirely controled from the keyboard (except though some of the demos require mouse interaction) The commands are:
 
