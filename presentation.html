@@ -105,12 +105,15 @@ var ch=canvas.height=canvas.offsetHeight;
 var ctx = canvas.getContext('2d');
 
 var margin = cw * 0.1;
-ctx.beginPath();
-ctx.moveTo(margin,margin);
-ctx.lineTo(cw-margin,ch-margin);
+var left=margin, right=cw-margin,
+    up = margin, down=ch-margin;
 
-ctx.strokeStyle = '#fff';
-ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(left,up);
+ctx.lineTo(right,down);
+
+ctx.strokeStyle = '#ff6';
+ctx.lineWidth = 2;
 ctx.stroke();
 </div>
     </div>  
@@ -142,12 +145,12 @@ ctx.fillRect(cw/4,ch/4,cw/2,ch/2);
   </div>
 
   <div class="slide">
-    <h2 class="center">Min + x*(Max - Min)</h2>
+    <h2 class="center">Start + x*(End - Start)</h2>
     <label class="sub-center">Linear Interpolation</label>
   </div>
 
   <div class="slide">
-    <h2 class="center">(y - Min) / (Max - Min)</h2>
+    <h2 class="center">(y - Start) / (End - Start)</h2>
     <label class="sub-center">Inverse Linear Interpolation</label>
   </div>
 
@@ -160,14 +163,13 @@ var cw=canvas.width=canvas.offsetWidth;
 var ch=canvas.height=canvas.offsetHeight;
 var ctx = canvas.getContext('2d');
 
-function interp( x, min, max ) {
-  return min + x * (max - min);
+function interp( x, start, end ) {
+  return start + x * (end - start);
 }
-function deinterp( x, min, max ) {
-  return (x-min) / (max - min);
+function deinterp( x, start, end ) {
+  return (x-start) / (end - start);
 }
 ctx.beginPath();
-ctx.moveTo(0,ch/2);
 var n = 1000;
 for (var i=0; i<=n; i++) {
   var x = deinterp(i, 0, n);
@@ -202,22 +204,24 @@ var cw=canvas.width=canvas.offsetWidth;
 var ch=canvas.height=canvas.offsetHeight;
 var ctx = canvas.getContext('2d');
 
+function interp(x,s,e) { return s+x*(e-s); }
+
 var RADIUS = Math.min( cw, ch ) * 0.4;
 var N = 5;
 ctx.beginPath();
+ctx.strokeStyle = '#ff6';
 for (var i=0; i < N; i++) {
-  var theta = i * 2*Math.PI / N;
+  var theta = interp( i/N, 0, 2*Math.PI );
   ctx.moveTo(
     cw/2 + RADIUS*Math.sin(theta),
     ch/2 - RADIUS*Math.cos(theta) );
 
-  theta += parseInt((N-1)/2)*2*Math.PI/N;
+  theta += parseInt((N-1)/2) * 2*Math.PI/N;
   ctx.lineTo(
     cw/2 + RADIUS*Math.sin(theta),
     ch/2 - RADIUS*Math.cos(theta));
 }
 
-ctx.strokeStyle = '#ff6';
 ctx.lineWidth = 1;
 ctx.stroke();
 </div>
@@ -257,9 +261,11 @@ var cw=canvas.width=canvas.offsetWidth;
 var ch=canvas.height=canvas.offsetHeight;
 var ctx = canvas.getContext('2d');
 
+ctx.lineWidth = 2;
 ctx.font = '80px Futura,Helvetica,Arial';
 ctx.strokeStyle = ctx.fillStyle = '#f09';
 ctx.textAlign = 'center';
+
 ctx.fillText("Chattanooga", cw/2, ch/2);
 </div>
     </div>  
@@ -297,7 +303,7 @@ function draw() {
   ctx.textAlign = 'center';
   ctx.fillText('x', 114, 4);
   ctx.fillText('y', 0, 120);
-  ctx.fillText('chattanooga',50,50)
+  ctx.fillText('chattanooga',50,80)
 }
 
 </div>
@@ -349,7 +355,7 @@ var cw=canvas.width=canvas.offsetWidth;
 var ch=canvas.height=canvas.offsetHeight;
 var ctx = canvas.getContext('2d');
 
-ctx.fillStyle = ctx.strokeStyle = '#6cf';
+ctx.fillStyle = 'rgba(100,200,255,1)';
 
 var RADIUS = 300;
 
@@ -405,7 +411,6 @@ var cw=canvas.width=canvas.offsetWidth;
 var ch=canvas.height=canvas.offsetHeight;
 var ctx = canvas.getContext('2d');
 
-
 var RADIUS = Math.min(cw,ch)/2.2;
 var FPS = 6;
 
@@ -445,6 +450,7 @@ var points = [];
 function draw(x,y) {
   ctx.clearRect( 0, 0, cw, ch);
   ctx.strokeStyle = 'rgba(255,225,100,1)';
+  ctx.lineWidth = 2;
 
   ctx.beginPath();
   ctx.moveTo(x,y);
