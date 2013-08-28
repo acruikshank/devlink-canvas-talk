@@ -173,7 +173,8 @@ ctx.beginPath();
 var n = 1000;
 for (var i=0; i<=n; i++) {
   var x = deinterp(i, 0, n);
-  var y = deinterp(Math.sin(i/20), -1, 1);
+  var f = Math.sin(i/20);
+  var y = deinterp(f, -1, 1);
   ctx.lineTo( 
     interp( x, 0, cw ),
     interp( y, 3*ch/4, ch/4 ) );
@@ -204,19 +205,23 @@ var cw=canvas.width=canvas.offsetWidth;
 var ch=canvas.height=canvas.offsetHeight;
 var ctx = canvas.getContext('2d');
 
-function interp(x,s,e) { return s+x*(e-s); }
+function interp(x,s,e) {
+  return s+x*(e-s); 
+}
 
-var RADIUS = Math.min( cw, ch ) * 0.4;
+var RADIUS = Math.min( cw, ch ) 
+             * 0.4;
 var N = 5;
 ctx.beginPath();
 ctx.strokeStyle = '#ff6';
 for (var i=0; i < N; i++) {
-  var theta = interp( i/N, 0, 2*Math.PI );
+  var theta=interp(i/N,0,2*Math.PI);
   ctx.moveTo(
     cw/2 + RADIUS*Math.sin(theta),
     ch/2 - RADIUS*Math.cos(theta) );
 
-  theta += parseInt((N-1)/2) * 2*Math.PI/N;
+  theta += parseInt((N-1)/2) 
+          * 2*Math.PI/N;
   ctx.lineTo(
     cw/2 + RADIUS*Math.sin(theta),
     ch/2 - RADIUS*Math.cos(theta));
